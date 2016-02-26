@@ -10,6 +10,8 @@ export default class PaginationBoxView extends Component {
     pageNum               : PropTypes.number.isRequired,
     pageRangeDisplayed    : PropTypes.number.isRequired,
     marginPagesDisplayed  : PropTypes.number.isRequired,
+    firstLabel            : PropTypes.node,
+    lastLabel             : PropTypes.node,
     previousLabel         : PropTypes.node,
     nextLabel             : PropTypes.node,
     breakLabel            : PropTypes.node,
@@ -21,11 +23,17 @@ export default class PaginationBoxView extends Component {
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
     activeClassName       : PropTypes.string,
+    firstClassName        : PropTypes.string,
+    lastClassName         : PropTypes.string,
     previousClassName     : PropTypes.string,
     nextClassName         : PropTypes.string,
+    firstLinkClassName    : PropTypes.string,
+    lastLinkClassName     : PropTypes.string,
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
-    disabledClassName     : PropTypes.string
+    disabledClassName     : PropTypes.string,
+    includeFirstLink      : PropTypes.bool,
+    includeLastLink       : PropTypes.bool,
   };
 
   static defaultProps = {
@@ -35,10 +43,16 @@ export default class PaginationBoxView extends Component {
     activeClassName      : "selected",
     previousClassName    : "previous",
     nextClassName        : "next",
+    firstClassName       : "first",
+    lastClassName        : "last",
+    firstLabel           : "First",
+    lastLabel            : "Last",
     previousLabel        : "Previous",
     nextLabel            : "Next",
     breakLabel           : "...",
-    disabledClassName    : "disabled"
+    disabledClassName    : "disabled",
+    includeFirstLink     : false,
+    includeLastLink      : false
   };
 
   constructor(props) {
@@ -70,6 +84,20 @@ export default class PaginationBoxView extends Component {
     }
   };
 
+  handleFirstPage = evt => {
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    if (this.state.selected > 0) {
+      this.handlePageSelected(0, evt);
+    }
+  };
+
+  handleLastPage = evt => {
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    if (this.state.selected < this.props.pageNum - 1) {
+      this.handlePageSelected(this.props.pageNum - 1, evt);
+    }
+  };
+
   handlePageSelected = (selected, evt) => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
@@ -97,8 +125,18 @@ export default class PaginationBoxView extends Component {
     const nextClasses = classNames(this.props.nextClassName,
                                    {disabled: this.state.selected === this.props.pageNum - 1});
 
+    const firstClasses = classNames(this.props.firstClassName,
+                                      {disabled: this.state.selected === 0});
+
+    const lastClasses = classNames(this.props.lastClassName,
+                                  {disabled: this.state.selected === this.props.pageNum - 1});
+
     return (
       <ul className={this.props.containerClassName}>
+        <li onClick={this.handleFirstPage} className={firstClasses}>
+          <a href="" className={this.props.firstLinkClassName}>{this.props.firstLabel}</a>
+        </li>
+
         <li onClick={this.handlePreviousPage} className={previousClasses}>
           <a href="" className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
@@ -120,6 +158,10 @@ export default class PaginationBoxView extends Component {
 
         <li onClick={this.handleNextPage} className={nextClasses}>
           <a href="" className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+        </li>
+
+        <li onClick={this.handleLastPage} className={lastClasses}>
+          <a href="" className={this.props.lastLinkClassName}>{this.props.lastLabel}</a>
         </li>
       </ul>
     );

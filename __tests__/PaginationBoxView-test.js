@@ -25,13 +25,13 @@ describe('PaginationBoxView', () => {
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
-    expect(pages.length).toEqual(9);
+    expect(pages.length).toEqual(11);
   });
 
   it('test previous and next buttons', () => {
     let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'li');
-    let previous = elmts[0];
-    let next = elmts[elmts.length - 1];
+    let previous = elmts[1];
+    let next = elmts[elmts.length - 2];
 
     ReactTestUtils.Simulate.click(next);
 
@@ -42,14 +42,28 @@ describe('PaginationBoxView', () => {
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
   });
 
+  it('test first and next last', () => {
+    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'li');
+    let first = elmts[0];
+    let last = elmts[elmts.length - 1];
+
+    ReactTestUtils.Simulate.click(last);
+
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("10");
+
+    ReactTestUtils.Simulate.click(first);
+
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
+  });
+
   it('test click on a page item', () => {
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationListView);
 
-    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)").querySelector("a");
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(4)").querySelector("a");
 
     ReactTestUtils.Simulate.click(pageItem);
 
-    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
   });
 
   it('test rendering only active page item', function() {
@@ -58,6 +72,6 @@ describe('PaginationBoxView', () => {
     );
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, current, next
-    expect(pageItems.length).toBe(4);
+    expect(pageItems.length).toBe(6);
   });
 });
