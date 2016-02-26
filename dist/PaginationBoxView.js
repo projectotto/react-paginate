@@ -109,7 +109,7 @@ var PaginationBoxView = function (_Component) {
       return _react2.default.createElement(
         'ul',
         { className: this.props.containerClassName },
-        includeFirstLink && _react2.default.createElement(
+        _react2.default.createElement(
           'li',
           { onClick: this.handleFirstPage, className: firstClasses },
           _react2.default.createElement(
@@ -152,7 +152,7 @@ var PaginationBoxView = function (_Component) {
             this.props.nextLabel
           )
         ),
-        includeLastLink && _react2.default.createElement(
+        _react2.default.createElement(
           'li',
           { onClick: this.handleLastPage, className: lastClasses },
           _react2.default.createElement(
@@ -200,9 +200,7 @@ PaginationBoxView.propTypes = {
   lastLinkClassName: _react.PropTypes.string,
   previousLinkClassName: _react.PropTypes.string,
   nextLinkClassName: _react.PropTypes.string,
-  disabledClassName: _react.PropTypes.string,
-  includeFirstLink: _react.PropTypes.bool,
-  includeLastLink: _react.PropTypes.bool
+  disabledClassName: _react.PropTypes.string
 };
 PaginationBoxView.defaultProps = {
   pageNum: 10,
@@ -218,9 +216,7 @@ PaginationBoxView.defaultProps = {
   previousLabel: "Previous",
   nextLabel: "Next",
   breakLabel: "...",
-  disabledClassName: "disabled",
-  includeFirstLink: false,
-  includeLastLink: false
+  disabledClassName: "disabled"
 };
 exports.default = PaginationBoxView;
 ;

@@ -31,9 +31,7 @@ export default class PaginationBoxView extends Component {
     lastLinkClassName     : PropTypes.string,
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
-    disabledClassName     : PropTypes.string,
-    includeFirstLink      : PropTypes.bool,
-    includeLastLink       : PropTypes.bool,
+    disabledClassName     : PropTypes.string
   };
 
   static defaultProps = {
@@ -50,9 +48,7 @@ export default class PaginationBoxView extends Component {
     previousLabel        : "Previous",
     nextLabel            : "Next",
     breakLabel           : "...",
-    disabledClassName    : "disabled",
-    includeFirstLink     : false,
-    includeLastLink      : false
+    disabledClassName    : "disabled"
   };
 
   constructor(props) {
